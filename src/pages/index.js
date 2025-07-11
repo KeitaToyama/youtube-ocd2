@@ -8,8 +8,10 @@ export default function Home() {
   const [activeTitle, setActiveTitle] = useState(null);
   const [allVideos, setAllVideos] = useState([]);
   const [missingVideos, setmissingVideos] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSync = async () => {
+    setLoading(true);
     const res = await fetch("/api/syncdata", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -17,6 +19,7 @@ export default function Home() {
     });
     const result = await res.json();
     setmissingVideos(result.missingData);
+    setLoading(false);
     // console.log("StateにないDBデータ:", result.missingData);
   };
 
@@ -45,6 +48,7 @@ export default function Home() {
   };
 
   const fetchAllVideos = async () => {
+    setLoading(true);
     const videoList = [];
     const videoIdSet = new Set();
 
@@ -97,6 +101,7 @@ export default function Home() {
 
     // 4. ステート更新＆件数出力
     setAllVideos(videoList);
+    setLoading(false);
     // console.log(`✅ ${videoList.length}件の動画を取得しました`);
   };
 
@@ -144,6 +149,7 @@ export default function Home() {
               </button>
             </li>
             {/* {JSON.stringify(missingVideos)} */}
+            {loading === true ? <p>ロード中</p> : <></>}
             {missingVideos?.map((video) => (
               <div key={video.videoId} className="video-card">
                 <a
