@@ -1,4 +1,4 @@
-export const scanlimit = 100;
+export const scanlimit = 150;
 
 // console.log(document.getElementsByClassName("border p-4 rounded flex gap-4").length)
 

@@ -16,6 +16,7 @@ export default function Home() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: allVideos }),
+      cache: "no-store",
     });
     const result = await res.json();
     setmissingVideos(result.missingData);

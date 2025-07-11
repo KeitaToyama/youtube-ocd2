@@ -1,14 +1,14 @@
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
 );
 
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: "5mb", // 必要に応じて増やす（例: '10mb', '20mb'）
+      sizeLimit: "50mb", // 必要に応じて増やす（例: '10mb', '20mb'）
     },
   },
 };

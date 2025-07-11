@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       const response = await youtube.videos.list({
         part: ["snippet", "contentDetails"],
         myRating: "like",
-        maxResults: 100, // 上限
+        maxResults: 50, // 上限
         pageToken: nextPageToken || undefined,
       });
 

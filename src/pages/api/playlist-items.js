@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       const result = await youtube.playlistItems.list({
         part: ["snippet", "contentDetails"],
         playlistId,
-        maxResults: 100,
+        maxResults: 50,
         pageToken: nextPageToken || undefined,
       });
 
