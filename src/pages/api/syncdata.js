@@ -31,14 +31,22 @@ export default async function handler(req, res) {
 
   // 2. 主キーなどで比較するためのSetを作成
   const stateIds = new Set(stateData.map((item) => item.videoId));
+  const statePrivateids = new Set(
+    stateData
+      .filter((item) => item.videoTitle === "Private video")
+      .map((item) => item.videoId)
+  );
+  // console.log(statePrivateids);
   const dbIds = new Set(dbData.map((item) => item.videoId));
 
   // 3. 新規追加対象を抽出（stateにはあるがDBにはないもの）
   const toInsert = stateData.filter((item) => !dbIds.has(item.videoId));
 
   // 4. 欠損データを抽出（DBにはあるがstateにはないもの）
-  const missingInState = dbData.filter((item) => !stateIds.has(item.videoId));
-
+  const missingInState = dbData.filter(
+    (item) => !stateIds.has(item.videoId) || statePrivateids.has(item.videoId)
+  );
+  // console.log(missingInState);
   // 5. Supabaseに新規データを挿入
   if (toInsert.length > 0) {
     const { error: insertError } = await supabase
